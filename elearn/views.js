@@ -1,5 +1,7 @@
 const Course = require('./models/course')
 const User = require('./models/user')
+const Analytics = require('./models/analytics');
+const Feedback = require('./models/feedback');
 
 exports.get_courses = async (req, res) => {
     let response = []
@@ -8,10 +10,7 @@ exports.get_courses = async (req, res) => {
 }
 
 exports.new_course = async (req, res) => {
-    console.log("🚀 ~ exports.new_course= ~ req:", req.body)
     const {title, description, profile_type, createdAt, points, name_identifier} = req.body
-    // res.header("Access-Control-Allow-Origin", "*"); // Use specific domain in production
-    console.log("🚀 ~ exports.new_course= ~ name_identifier:", name_identifier)
     const response = []
     try{
         const course = new Course({
@@ -34,6 +33,35 @@ exports.user = async (req, res) => {
     const response = []
     const { first_name, last_name, email, phone, referral } = req.body;
     const newUser = new User({ first_name, last_name, email, phone, referral });
-    console.log("🚀 ~ exports.user= ~ newUser:", newUser)
     res.send(response)
 } 
+
+exports.analytics = async (req, res) => {
+  try {
+    const course = await Course.findOne({ name_identifier: req.body.course });
+    if (!course) return res.status(404).send('Course not found');
+
+    const analytics = new Analytics({ ...req.body, course: course._id });
+    await analytics.save();
+    res.status(201).send('Analytics recorded');
+  } catch (err) {
+    res.status(500).send('Error saving analytics');
+  }
+} 
+
+exports.feedback = async (req, res) => {
+    try {
+      const course = await Course.findOne({ name_identifier: req.body.course });
+      if (!course) return res.status(404).send('Course not found');
+  
+      const feedback = new Feedback({
+        course: course._id,
+        cardIndex: req.body.cardIndex,
+        feedback: req.body.feedback
+      });
+      await feedback.save();
+      res.status(201).send('Feedback saved');
+    } catch (err) {
+      res.status(500).send('Error saving feedback');
+    }
+  }
