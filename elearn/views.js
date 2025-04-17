@@ -64,4 +64,26 @@ exports.feedback = async (req, res) => {
     } catch (err) {
       res.status(500).send('Error saving feedback');
     }
+  } 
+
+exports.update_course = async (req, res) => {
+  try {
+    const courseId = req.body._id;
+
+    const updatedCourse = await Course.findByIdAndUpdate(
+      courseId,
+      req.body,           // directly use the updated object
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedCourse) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    res.status(200).json(updatedCourse);
+  } catch (err) {
+    console.error("🚀 ~ exports.update_course ~ error:", err);
+    res.status(500).send('Error updating course');
   }
+};
+  
