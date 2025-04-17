@@ -12,7 +12,7 @@ const courseSchema = new mongoose.Schema({
   },
   profile_type: {
     type: String,
-    enum: ['Prophetic', 'Default', 'Partner', 'Sons/Daughters', 'Dev','Evangelism', 'NewBorn', 'Ministers'], 
+    enum: ['Prophetic', 'Default', 'Partner', 'Sons/Daughters', 'Dev','Evangelism', 'NewBorn', 'Ministers', 'Marketing'], 
     required: true
   },
   createdAt: {
