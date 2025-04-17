@@ -93,4 +93,10 @@ exports.update_course = async (req, res) => {
     res.status(500).send('Error updating course');
   }
 };
-  
+
+exports.health_check = async (req, res) => {
+  const response = [{
+    "ping":"pong"
+  }]
+  res.status(200).json(response)
+}

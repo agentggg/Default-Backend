@@ -8,5 +8,8 @@ router.put('/new_course', views.new_course)
 router.put('/subscribe', views.user)
 router.put('/analytics', views.analytics)
 router.post('/feedback', views.feedback)
+router.get('/health_check', views.health_check)
+
+
 
 module.exports = router 
