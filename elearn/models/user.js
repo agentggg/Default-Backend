@@ -11,14 +11,14 @@ const userSchema = new mongoose.Schema({
   },
   profile_type: {
     type: String,
-    enum: ['Prophetic', 'Default', 'Partner', 'Sons/Daughters'],
+    enum: ['Prophetic', 'Default', 'Partner', 'Sons/Daughters', 'Dev','Evangelism', 'NewBorn', 'Ministers'],
     required: true
   },
   createdAt: {
     type: Date,
     default: Date.now,
     required: true,
-  },
+  }, 
   referral: {
     type: String,
     required: false

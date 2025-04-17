@@ -9,6 +9,7 @@ router.put('/subscribe', views.user)
 router.put('/analytics', views.analytics)
 router.post('/feedback', views.feedback)
 router.get('/health_check', views.health_check)
+router.get('/get_course/:name_identifier', views.get_course)
 
 
 

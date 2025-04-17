@@ -24,7 +24,6 @@ exports.new_course = async (req, res) => {
           await course.save() 
           res.status(201).json(course)
     }catch(err){
-        console.log("🚀 ~ exports.new_course= ~ err:", err)
         res.status(500).json(response)
     }
 } 
@@ -99,4 +98,16 @@ exports.health_check = async (req, res) => {
     "ping":"pong"
   }]
   res.status(200).json(response)
+}
+
+exports.get_course = async (req, res) => {
+  let response = []
+  try{
+    response = await Course.findOne({name_identifier:req.params.name_identifier})
+    res.status(200).json(response)
+  }catch(err){
+    console.log("🚀 ~ exports.get_course= ~ err:", err)
+    res.status(500).json(response)
+  }
+  
 }

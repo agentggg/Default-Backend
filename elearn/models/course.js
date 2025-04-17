@@ -12,7 +12,7 @@ const courseSchema = new mongoose.Schema({
   },
   profile_type: {
     type: String,
-    enum: ['private', 'common', 'prophet','test'], 
+    enum: ['Prophetic', 'Default', 'Partner', 'Sons/Daughters', 'Dev','Evangelism', 'NewBorn', 'Ministers'], 
     required: true
   },
   createdAt: {
@@ -32,4 +32,4 @@ const courseSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Course', courseSchema);
+module.exports = mongoose.model('Course', courseSchema); 
