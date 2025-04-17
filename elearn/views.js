@@ -31,9 +31,16 @@ exports.new_course = async (req, res) => {
 
 exports.user = async (req, res) => {
     const response = []
-    const { first_name, last_name, email, phone, referral } = req.body;
-    const newUser = new User({ first_name, last_name, email, phone, referral });
-    res.send(response)
+    try{
+      req.body['profile_type'] = 'Default'
+      const response = new User(req.body);
+      await response.save()
+      res.status(200).send(response);
+    }catch(err){
+      console.log("🚀 ~ exports.user= ~ err:", err)
+      res.status(500).send(response);
+    }
+ 
 } 
 
 exports.analytics = async (req, res) => {
