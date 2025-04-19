@@ -2,8 +2,8 @@ const Course = require('./models/course')
 const User = require('./models/user')
 const Analytics = require('./models/analytics');
 const Feedback = require('./models/feedback');
+const mongoose = require('mongoose');
 var nodemailer = require('nodemailer');
-
 
 
 exports.get_courses = async (req, res) => {
@@ -133,7 +133,7 @@ Tech & Faith
 
 exports.analytics = async (req, res) => {
   try {
-    const course = await Course.findOne({ name_identifier: req.body.course });
+    const course = await Course.findOne({ _id: new mongoose.Types.ObjectId(req.body.course) });
     if (!course) return res.status(404).send('Course not found');
 
     const analytics = new Analytics({ ...req.body, course: course._id });
