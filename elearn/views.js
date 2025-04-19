@@ -182,6 +182,30 @@ exports.update_course = async (req, res) => {
   }
 };
 
+exports.delete_card = async (req, res) => {
+  try {
+    const courseId = req.body._id;
+    const cardIndex = req.body.index; // index of card to delete
+
+    const course = await Course.findById(courseId);
+    if (!course) return res.status(404).json({ message: 'Course not found' });
+
+    if (cardIndex < 0 || cardIndex >= course.cards.length) {
+      return res.status(400).json({ message: 'Invalid card index' });
+    }
+
+    // Remove the card from the array
+    course.cards.splice(cardIndex, 1);
+
+    const updatedCourse = await course.save();
+    res.status(200).json(updatedCourse);
+  } catch (err) {
+    console.error("🚀 ~ exports.delete_card ~ error:", err);
+    res.status(500).send('Error deleting card');
+  }
+};
+
+
 exports.health_check = async (req, res) => {
   const response = [{
     "ping":"pong"
